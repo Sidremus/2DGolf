@@ -1,6 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://cfgjfsautkryy"]
+[gd_scene load_steps=14 format=3 uid="uid://cfgjfsautkryy"]
 
 [ext_resource type="Script" path="res://ball.gd" id="1_3omi1"]
+[ext_resource type="AudioStream" uid="uid://tv03erv2acpi" path="res://assets/ball_in_hole.mp3" id="2_cb0w8"]
+[ext_resource type="AudioStream" uid="uid://cwddrrr4n8e6u" path="res://assets/golf_ball_hit_01.mp3" id="3_golc5"]
+[ext_resource type="AudioStream" uid="uid://ui1w8cu0ut7p" path="res://assets/golf_ball_hit_02.mp3" id="4_cuqso"]
+[ext_resource type="AudioStream" uid="uid://bfmsmxg6ro35m" path="res://assets/hole_in_one.mp3" id="5_p4li0"]
+[ext_resource type="AudioStream" uid="uid://dj7rvo0q87t12" path="res://assets/ball_impact.mp3" id="5_vi43m"]
+[ext_resource type="Texture2D" uid="uid://cmnui1rvq7qmq" path="res://assets/crosshair.png" id="6_jl30q"]
+[ext_resource type="FontFile" uid="uid://b6kdap2sdhueq" path="res://assets/w3-ip.ttf" id="8_obkd5"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fo4ki"]
 friction = 0.05
@@ -11,9 +18,13 @@ bounce = 0.95
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_plrxk"]
 blend_mode = 1
 
-[sub_resource type="Curve" id="Curve_1h5uw"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 2
+[sub_resource type="Curve" id="Curve_twbpo"]
+max_value = 3.0
+_data = [Vector2(0, 0.855067), 0.0, 34.2303, 0, 0, Vector2(0.180141, 3), 0.0, 0.0, 0, 0, Vector2(0.789982, 3), 0.0, 0.0, 0, 0, Vector2(1, 0.767381), -37.3166, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Gradient" id="Gradient_acavb"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
 [node name="Ball" type="RigidBody2D"]
 z_index = 200
@@ -34,18 +45,24 @@ z_index = 1000
 shape = SubResource("CircleShape2D_sjwmy")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
+[node name="Crosshair" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(181, 117)
+texture = ExtResource("6_jl30q")
+
 [node name="MouseLine" type="Line2D" parent="."]
 visible = false
 material = SubResource("CanvasItemMaterial_plrxk")
 points = PackedVector2Array(0, 0, 0, 0)
 width = 2.5
+width_curve = SubResource("Curve_twbpo")
 
 [node name="AimLine" type="Line2D" parent="."]
 visible = false
 material = SubResource("CanvasItemMaterial_plrxk")
 points = PackedVector2Array(0, 0, 0, 0)
 width = 2.5
-width_curve = SubResource("Curve_1h5uw")
+gradient = SubResource("Gradient_acavb")
 
 [node name="PowerLine" type="Line2D" parent="."]
 visible = false
@@ -79,5 +96,46 @@ position = Vector2(-10.5, -123.5)
 points = PackedVector2Array(0, -0.75, 6, -0.75)
 width = 1.5
 
+[node name="BallInHoleAS" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_cb0w8")
+volume_db = -5.0
+bus = &"Sfx"
+
+[node name="BallHit01AS" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_golc5")
+volume_db = 3.0
+bus = &"Sfx"
+
+[node name="BallHit02AS" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_cuqso")
+volume_db = 3.0
+bus = &"Sfx"
+
+[node name="BallImpactAS" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_vi43m")
+volume_db = -20.591
+bus = &"Sfx"
+
+[node name="HoleInOneAS" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_p4li0")
+bus = &"Sfx"
+
+[node name="LastShotInfo" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_fonts/font = ExtResource("8_obkd5")
+
+[node name="CurrentShotInfo" type="Label" parent="."]
+offset_right = 81.0
+offset_bottom = 66.0
+theme_override_fonts/font = ExtResource("8_obkd5")
+text = "TESF SDF 
+sDFS 
+sdf dh
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

@@ -1,7 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://b855ubnq8ds2q"]
+[gd_scene load_steps=8 format=3 uid="uid://b855ubnq8ds2q"]
 
 [ext_resource type="PackedScene" uid="uid://cfgjfsautkryy" path="res://scenes/ball.tscn" id="1_pujof"]
-[ext_resource type="Script" path="res://goal.gd" id="2_8rh5c"]
+[ext_resource type="PackedScene" uid="uid://ctjw8fd2jawwk" path="res://scenes/goal.tscn" id="2_vk722"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_f2n4n"]
 friction = 0.5
@@ -19,15 +19,6 @@ b = Vector2(0, -341.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xe38j"]
 size = Vector2(1525, 683)
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_qf42k"]
-radius = 6.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_vs4ds"]
-radius = 15.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_fy7cr"]
-radius = 15.0
 
 [node name="Level01" type="Node2D"]
 
@@ -75,38 +66,4 @@ debug_color = Color(0.152941, 0.407843, 0.266667, 0.14902)
 position = Vector2(400, 540)
 linear_damp_mode = 0
 
-[node name="Goal" type="Area2D" parent="."]
-position = Vector2(1520, 540)
-gravity_space_override = 1
-gravity_point = true
-gravity = 150.0
-linear_damp_space_override = 3
-linear_damp = 2.0
-script = ExtResource("2_8rh5c")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Goal"]
-visible = false
-self_modulate = Color(1, 1, 1, 0.8)
-z_index = 100
-shape = SubResource("CircleShape2D_qf42k")
-debug_color = Color(1, 1, 1, 0.494118)
-
-[node name="Goal2" type="Area2D" parent="Goal"]
-collision_layer = 8388608
-collision_mask = 8388608
-gravity_space_override = 1
-gravity_point = true
-gravity = 150.0
-linear_damp_space_override = 3
-linear_damp = 2.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Goal/Goal2"]
-modulate = Color(0, 0, 0, 1)
-shape = SubResource("CircleShape2D_vs4ds")
-debug_color = Color(1, 1, 1, 1)
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Goal/Goal2"]
-shape = SubResource("CircleShape2D_fy7cr")
-debug_color = Color(0.835294, 0.85098, 0.92549, 0)
-
-[connection signal="body_exited" from="Goal" to="Goal" method="_on_body_exited"]
+[node name="Goal" parent="." instance=ExtResource("2_vk722")]

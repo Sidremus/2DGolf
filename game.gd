@@ -3,8 +3,14 @@ extends Node
 # Settings
 var reset_velocity_on_shot: bool = false
 var can_shoot_while_moving: bool = true
-var ui_alpha: float = .8
+var reverse_mouse_draw: bool = true
+var joke_number: float = 420.
 var multi_ball_mode: bool = false
+
+var sfx_volume: float = 1. #TODO: control Sfx audio bus volume with this
+var music_volume: float = 1. #TODO: control Music audio bus volume with this
+
+var ui_alpha: float = .8
 
 # Game
 var shot_power: float = 1000.
@@ -12,7 +18,7 @@ var shot_power: float = 1000.
 var max_mouse_line_length: float = 250.
 var min_shooting_velocity: float = 50.
 
-var time_needed_to_score: float = 1.25
+var time_needed_to_score: float = .6
 var max_distance_to_score: float = 6.
 var max_velocity_to_score: float = 10.
 
@@ -22,7 +28,6 @@ var shot_count: int = 0
 var level_select_scene = preload("res://scenes/level_selection.tscn")
 
 func _ready() -> void:
-	#Input.mouse_mode = Input.MOUSE_MODE_CONFINED
 	randomize()
 	shot_count = 0
 
@@ -33,4 +38,5 @@ func _input(event: InputEvent) -> void:
 		_ready()
 
 func go_to_level_select():
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	get_tree().change_scene_to_packed(level_select_scene)

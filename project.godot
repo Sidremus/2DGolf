@@ -25,7 +25,8 @@ window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/size/window_width_override=2880
 window/size/window_height_override=1620
-window/stretch/mode="canvas_items"
+window/stretch/mode="viewport"
+window/main_scene="res://scenes/level_selection.tscn"
 
 [input]
 

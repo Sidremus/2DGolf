@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dqghvpo6gup30"]
+[gd_scene load_steps=3 format=3 uid="uid://dqghvpo6gup30"]
 
 [ext_resource type="Script" path="res://level_selection_button.gd" id="1_6eo8f"]
+[ext_resource type="FontFile" uid="uid://b6kdap2sdhueq" path="res://assets/w3-ip.ttf" id="1_8f8rn"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -11,13 +12,16 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ButtonLevel01" type="Button" parent="."]
+texture_filter = 1
 layout_mode = 0
-offset_left = 444.0
-offset_top = 107.0
-offset_right = 520.0
-offset_bottom = 138.0
-text = "LEVEL 01
-"
+offset_left = 339.0
+offset_top = 152.0
+offset_right = 672.0
+offset_bottom = 254.0
+scale = Vector2(0.5, 0.5)
+theme_override_fonts/font = ExtResource("1_8f8rn")
+theme_override_font_sizes/font_size = 65
+text = " LEVEL 01"
 script = ExtResource("1_6eo8f")
 
 [connection signal="button_up" from="ButtonLevel01" to="ButtonLevel01" method="_on_button_up"]
