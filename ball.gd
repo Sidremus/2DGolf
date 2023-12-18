@@ -16,8 +16,9 @@ var score_tween: Tween
 func _input(event: InputEvent) -> void:
 	if freeze: return
 	if !is_selected && Game.multi_ball_mode: return
-	if event.is_action_pressed("lmb") && can_shoot && !is_shooting: begin_shot()
-	if event.is_action_released("lmb") && is_shooting: finish_shot()
+	if event.is_action_pressed("shoot") && can_shoot && !is_shooting: begin_shot()
+	if event.is_action_released("shoot") && is_shooting: finish_shot()
+	if event.is_action_pressed("cancel_shot") && is_shooting: is_shooting = false
 
 func _on_mouse_entered() -> void: is_selected = true
 
@@ -37,7 +38,6 @@ func _process(delta: float) -> void:
 		var color_lerp:float = (mouse_line.points[1].length() / Game.max_mouse_line_length)
 		var col = Color.PALE_TURQUOISE.lerp(Color.PALE_GOLDENROD.lerp(Color.PALE_VIOLET_RED, color_lerp), color_lerp)
 		power_line.default_color = Color(col, mouse_line.default_color.a *.5)
-		#power_line.global_position = get_global_mouse_position() - ((global_position - get_global_mouse_position()).normalized() * 50.).rotated(PI/2)
 
 func begin_shot():
 	Game.mouse_pos_at_click = get_global_mouse_position()
@@ -69,6 +69,7 @@ func _ready() -> void:
 	aim_line.self_modulate.a = Game.ui_alpha
 	mouse_line.self_modulate.a = Game.ui_alpha
 	
+	power_line.visible = true
 	power_line.top_level = true
 	power_line.global_position = Vector2(75., Game.max_mouse_line_length + 75.)
 	power_line.modulate.a = Game.ui_alpha
@@ -78,8 +79,11 @@ func score(target_pos: Vector2):
 	is_shooting = false
 	score_tween = get_tree().create_tween()
 	score_tween.set_parallel(true)
-	score_tween.set_ease(Tween.EASE_IN_OUT)
+	score_tween.set_ease(Tween.EASE_OUT)
 	score_tween.set_trans(Tween.TRANS_ELASTIC)
 	score_tween.tween_property(self, "global_position", target_pos, .8)
-	score_tween.tween_property(self, "scale", scale*.5, .8)
-	
+	score_tween.set_ease(Tween.EASE_OUT_IN)
+	score_tween.set_trans(Tween.TRANS_BOUNCE)
+	score_tween.tween_property(self, "scale", scale * 0., .8)
+	score_tween.set_parallel(false)
+	score_tween.tween_callback(Game.go_to_level_select).set_delay(2.)

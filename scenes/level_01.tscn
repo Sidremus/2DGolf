@@ -1,13 +1,13 @@
-[gd_scene load_steps=12 format=3 uid="uid://b855ubnq8ds2q"]
+[gd_scene load_steps=11 format=3 uid="uid://b855ubnq8ds2q"]
 
-[ext_resource type="Script" path="res://ball.gd" id="1_i2wn3"]
+[ext_resource type="PackedScene" uid="uid://cfgjfsautkryy" path="res://scenes/ball.tscn" id="1_pujof"]
 [ext_resource type="Script" path="res://goal.gd" id="2_8rh5c"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_f2n4n"]
 friction = 0.5
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_xe38j"]
-size = Vector2(200, 200)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rvsu3"]
+size = Vector2(275, 275)
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_0rsy6"]
 a = Vector2(759.5, 0)
@@ -17,121 +17,96 @@ b = Vector2(-759.5, 0)
 a = Vector2(0, 341.5)
 b = Vector2(0, -341.5)
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fo4ki"]
-friction = 0.0
-bounce = 1.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_sjwmy"]
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_plrxk"]
-blend_mode = 1
-
-[sub_resource type="Curve" id="Curve_1h5uw"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 2
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xe38j"]
+size = Vector2(1525, 683)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qf42k"]
+radius = 6.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vs4ds"]
+radius = 15.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fy7cr"]
 radius = 15.0
 
 [node name="Level01" type="Node2D"]
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="LevelGeo" type="StaticBody2D" parent="."]
+position = Vector2(960, 540)
 physics_material_override = SubResource("PhysicsMaterial_f2n4n")
 
-[node name="CollisionShape2D5" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(719, 404)
+[node name="rectangle" type="CollisionShape2D" parent="LevelGeo"]
+rotation = 0.785398
+shape = SubResource("RectangleShape2D_rvsu3")
+debug_color = Color(0.494118, 0.898039, 0.513726, 0.258824)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelGeo"]
+position = Vector2(0, -340)
+shape = SubResource("SegmentShape2D_0rsy6")
+debug_color = Color(0.494118, 0.898039, 0.513726, 0.584314)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="LevelGeo"]
+position = Vector2(0, 340)
+shape = SubResource("SegmentShape2D_0rsy6")
+debug_color = Color(0.494118, 0.898039, 0.513726, 0.584314)
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="LevelGeo"]
+position = Vector2(-761, 0)
+shape = SubResource("SegmentShape2D_s6t4u")
+debug_color = Color(0.494118, 0.898039, 0.513726, 0.584314)
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="LevelGeo"]
+position = Vector2(761, 0)
+shape = SubResource("SegmentShape2D_s6t4u")
+debug_color = Color(0.494118, 0.898039, 0.513726, 0.584314)
+
+[node name="BG" type="StaticBody2D" parent="."]
+z_index = -500
+position = Vector2(960, 540)
+collision_layer = 0
+collision_mask = 0
+physics_material_override = SubResource("PhysicsMaterial_f2n4n")
+
+[node name="CollisionShape2D6" type="CollisionShape2D" parent="BG"]
 shape = SubResource("RectangleShape2D_xe38j")
+debug_color = Color(0.152941, 0.407843, 0.266667, 0.14902)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(960, 200)
-shape = SubResource("SegmentShape2D_0rsy6")
-one_way_collision_margin = 128.0
-debug_color = Color(0.329412, 0.717647, 0.478431, 0.419608)
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(960, 880)
-shape = SubResource("SegmentShape2D_0rsy6")
-one_way_collision_margin = 128.0
-debug_color = Color(0.329412, 0.717647, 0.478431, 0.419608)
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(199, 540)
-shape = SubResource("SegmentShape2D_s6t4u")
-one_way_collision_margin = 128.0
-debug_color = Color(0.329412, 0.717647, 0.478431, 0.419608)
-
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(1721, 540)
-shape = SubResource("SegmentShape2D_s6t4u")
-one_way_collision_margin = 128.0
-debug_color = Color(0.329412, 0.717647, 0.478431, 0.419608)
-
-[node name="Ball" type="RigidBody2D" parent="."]
-position = Vector2(366, 233)
-input_pickable = true
-physics_material_override = SubResource("PhysicsMaterial_fo4ki")
-lock_rotation = true
-freeze_mode = 1
-continuous_cd = 1
-max_contacts_reported = 1
-contact_monitor = true
-linear_damp_mode = 1
-linear_damp = 0.3
-script = ExtResource("1_i2wn3")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
-shape = SubResource("CircleShape2D_sjwmy")
-debug_color = Color(0, 0.6, 0.701961, 0.419608)
-
-[node name="MouseLine" type="Line2D" parent="Ball"]
-material = SubResource("CanvasItemMaterial_plrxk")
-points = PackedVector2Array(0, 0, 0, 0)
-width = 2.5
-
-[node name="AimLine" type="Line2D" parent="Ball"]
-material = SubResource("CanvasItemMaterial_plrxk")
-points = PackedVector2Array(0, 0, 0, 0)
-width = 2.5
-width_curve = SubResource("Curve_1h5uw")
-
-[node name="PowerLine" type="Line2D" parent="Ball"]
-material = SubResource("CanvasItemMaterial_plrxk")
-position = Vector2(100, 50)
-scale = Vector2(2, 2)
-points = PackedVector2Array(0, 0, 0, -125)
-width = 2.5
-
-[node name="PowerLineLegend" type="Line2D" parent="Ball/PowerLine"]
-material = SubResource("CanvasItemMaterial_plrxk")
-position = Vector2(-10, 0)
-points = PackedVector2Array(0, 0, 0, -125)
-width = 1.5
-
-[node name="PowerLineLegend4" type="Line2D" parent="Ball/PowerLine"]
-material = SubResource("CanvasItemMaterial_plrxk")
-position = Vector2(-10.5, 0)
-points = PackedVector2Array(0, -0.75, 6, -0.75)
-width = 1.5
-
-[node name="PowerLineLegend5" type="Line2D" parent="Ball/PowerLine"]
-material = SubResource("CanvasItemMaterial_plrxk")
-position = Vector2(-10.5, -61.75)
-points = PackedVector2Array(0, -0.75, 6, -0.75)
-width = 1.5
-
-[node name="PowerLineLegend6" type="Line2D" parent="Ball/PowerLine"]
-material = SubResource("CanvasItemMaterial_plrxk")
-position = Vector2(-10.5, -123.5)
-points = PackedVector2Array(0, -0.75, 6, -0.75)
-width = 1.5
+[node name="Ball" parent="." instance=ExtResource("1_pujof")]
+position = Vector2(400, 540)
+linear_damp_mode = 0
 
 [node name="Goal" type="Area2D" parent="."]
-position = Vector2(528, 370)
+position = Vector2(1520, 540)
+gravity_space_override = 1
+gravity_point = true
+gravity = 150.0
+linear_damp_space_override = 3
+linear_damp = 2.0
 script = ExtResource("2_8rh5c")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Goal"]
+visible = false
+self_modulate = Color(1, 1, 1, 0.8)
+z_index = 100
 shape = SubResource("CircleShape2D_qf42k")
+debug_color = Color(1, 1, 1, 0.494118)
 
-[connection signal="mouse_entered" from="Ball" to="Ball" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="Ball" to="Ball" method="_on_mouse_exited"]
+[node name="Goal2" type="Area2D" parent="Goal"]
+collision_layer = 8388608
+collision_mask = 8388608
+gravity_space_override = 1
+gravity_point = true
+gravity = 150.0
+linear_damp_space_override = 3
+linear_damp = 2.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Goal/Goal2"]
+modulate = Color(0, 0, 0, 1)
+shape = SubResource("CircleShape2D_vs4ds")
+debug_color = Color(1, 1, 1, 1)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Goal/Goal2"]
+shape = SubResource("CircleShape2D_fy7cr")
+debug_color = Color(0.835294, 0.85098, 0.92549, 0)
+
 [connection signal="body_exited" from="Goal" to="Goal" method="_on_body_exited"]

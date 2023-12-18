@@ -1,0 +1,83 @@
+[gd_scene load_steps=6 format=3 uid="uid://cfgjfsautkryy"]
+
+[ext_resource type="Script" path="res://ball.gd" id="1_3omi1"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fo4ki"]
+friction = 0.05
+bounce = 0.95
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sjwmy"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_plrxk"]
+blend_mode = 1
+
+[sub_resource type="Curve" id="Curve_1h5uw"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="Ball" type="RigidBody2D"]
+z_index = 200
+position = Vector2(366, 233)
+input_pickable = true
+physics_material_override = SubResource("PhysicsMaterial_fo4ki")
+lock_rotation = true
+freeze_mode = 1
+continuous_cd = 1
+max_contacts_reported = 1
+contact_monitor = true
+linear_damp_mode = 1
+linear_damp = 0.3
+script = ExtResource("1_3omi1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+z_index = 1000
+shape = SubResource("CircleShape2D_sjwmy")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="MouseLine" type="Line2D" parent="."]
+visible = false
+material = SubResource("CanvasItemMaterial_plrxk")
+points = PackedVector2Array(0, 0, 0, 0)
+width = 2.5
+
+[node name="AimLine" type="Line2D" parent="."]
+visible = false
+material = SubResource("CanvasItemMaterial_plrxk")
+points = PackedVector2Array(0, 0, 0, 0)
+width = 2.5
+width_curve = SubResource("Curve_1h5uw")
+
+[node name="PowerLine" type="Line2D" parent="."]
+visible = false
+material = SubResource("CanvasItemMaterial_plrxk")
+position = Vector2(100, 50)
+scale = Vector2(2, 2)
+points = PackedVector2Array(0, 0, 0, -125)
+width = 2.5
+
+[node name="PowerLineLegend" type="Line2D" parent="PowerLine"]
+material = SubResource("CanvasItemMaterial_plrxk")
+position = Vector2(-10, 0)
+points = PackedVector2Array(0, 0, 0, -125)
+width = 1.5
+
+[node name="PowerLineLegend4" type="Line2D" parent="PowerLine"]
+material = SubResource("CanvasItemMaterial_plrxk")
+position = Vector2(-10.5, 0)
+points = PackedVector2Array(0, -0.75, 6, -0.75)
+width = 1.5
+
+[node name="PowerLineLegend5" type="Line2D" parent="PowerLine"]
+material = SubResource("CanvasItemMaterial_plrxk")
+position = Vector2(-10.5, -61.75)
+points = PackedVector2Array(0, -0.75, 6, -0.75)
+width = 1.5
+
+[node name="PowerLineLegend6" type="Line2D" parent="PowerLine"]
+material = SubResource("CanvasItemMaterial_plrxk")
+position = Vector2(-10.5, -123.5)
+points = PackedVector2Array(0, -0.75, 6, -0.75)
+width = 1.5
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
