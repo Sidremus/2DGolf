@@ -1,15 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://ctjw8fd2jawwk"]
+[gd_scene load_steps=4 format=3 uid="uid://ctjw8fd2jawwk"]
 
 [ext_resource type="Script" path="res://goal.gd" id="1_tb6ow"]
+[ext_resource type="Texture2D" uid="uid://bjychxpaihyks" path="res://assets/goal.png" id="2_fl5cp"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qf42k"]
 radius = 7.5
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_vs4ds"]
-radius = 12.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_fy7cr"]
-radius = 12.0
 
 [node name="Goal" type="Area2D"]
 position = Vector2(1520, 540)
@@ -21,28 +16,14 @@ linear_damp = 5.0
 script = ExtResource("1_tb6ow")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 self_modulate = Color(1, 1, 1, 0.8)
 z_index = 100
 shape = SubResource("CircleShape2D_qf42k")
 debug_color = Color(1, 1, 1, 0.494118)
 
-[node name="Goal2" type="Area2D" parent="."]
-collision_layer = 8388608
-collision_mask = 8388608
-gravity_space_override = 1
-gravity_point = true
-gravity = 1500.0
-linear_damp_space_override = 3
-linear_damp = 2.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Goal2"]
-modulate = Color(0, 0, 0, 1)
-shape = SubResource("CircleShape2D_vs4ds")
-debug_color = Color(1, 1, 1, 1)
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Goal2"]
-shape = SubResource("CircleShape2D_fy7cr")
-debug_color = Color(0.835294, 0.85098, 0.92549, 0)
+[node name="HoleLarge" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(0.095, 0.095)
+texture = ExtResource("2_fl5cp")
 
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

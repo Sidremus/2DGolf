@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bxonjf52a01u3"]
+[gd_scene load_steps=4 format=3 uid="uid://bxonjf52a01u3"]
 
 [ext_resource type="FontFile" uid="uid://b6kdap2sdhueq" path="res://assets/w3-ip.ttf" id="1_hem50"]
 [ext_resource type="Script" path="res://level_selection_button.gd" id="2_sj53s"]
+[ext_resource type="Script" path="res://options_menu.gd" id="3_17lay"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -11,58 +12,323 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ButtonLevel01" type="Button" parent="."]
+[node name="BG" type="ColorRect" parent="."]
+z_index = -500
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.337255, 0.8, 0.541176, 1)
+
+[node name="BG2" type="ColorRect" parent="."]
+z_index = -500
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0117647, 0.0666667, 0.0313726, 1)
+
+[node name="Title" type="Label" parent="."]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -242.0
+offset_top = 20.0
+offset_right = 242.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.48523, 1.48523)
+pivot_offset = Vector2(242, 0)
+theme_override_fonts/font = ExtResource("1_hem50")
+theme_override_font_sizes/font_size = 70
+text = "- 2D GOLF -"
+horizontal_alignment = 1
+
+[node name="Options" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 1306.0
+offset_top = 153.0
+offset_right = 1882.0
+offset_bottom = 529.0
+script = ExtResource("3_17lay")
+
+[node name="ColorRect" type="ColorRect" parent="Options"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.337255, 0.8, 0.541176, 1)
+
+[node name="ColorRect3" type="ColorRect" parent="Options"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = -3.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.768627)
+
+[node name="ColorRect2" type="ColorRect" parent="Options"]
+layout_mode = 1
+offset_left = 32.0
+offset_top = 85.0
+offset_right = 266.0
+offset_bottom = 89.0
+color = Color(1, 1, 1, 0.529412)
+
+[node name="OptionsLabel" type="Label" parent="Options"]
+texture_filter = 1
+layout_mode = 1
+offset_left = 21.0
+offset_top = 15.0
+offset_right = 329.0
+offset_bottom = 101.0
+scale = Vector2(0.70689, 0.70689)
+pivot_offset = Vector2(39, 15)
+theme_override_fonts/font = ExtResource("1_hem50")
+theme_override_font_sizes/font_size = 70
+text = "OPTIONS:"
+horizontal_alignment = 1
+
+[node name="CheckboxToggleFullscreen" type="CheckBox" parent="Options"]
 texture_filter = 1
 layout_mode = 0
-offset_left = 400.0
-offset_top = 150.0
-offset_right = 818.0
-offset_bottom = 252.0
+offset_left = 508.0
+offset_top = 119.0
+offset_right = 532.0
+offset_bottom = 143.0
+scale = Vector2(2, 2)
+theme_override_fonts/font = ExtResource("1_hem50")
+theme_override_font_sizes/font_size = 51
+
+[node name="OptionsLabel2" type="Label" parent="Options/CheckboxToggleFullscreen"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -239.0
+offset_top = -3.9375
+offset_right = 598.0
+offset_bottom = 82.0625
+grow_vertical = 2
+scale = Vector2(0.25, 0.25)
+pivot_offset = Vector2(0, -10.75)
+theme_override_fonts/font = ExtResource("1_hem50")
+theme_override_font_sizes/font_size = 50
+text = "toggle fullscreen"
+
+[node name="CheckboxCanShootWhileMoving" type="CheckBox" parent="Options"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 508.0
+offset_top = 179.0
+offset_right = 532.0
+offset_bottom = 203.0
+scale = Vector2(2, 2)
+theme_override_fonts/font = ExtResource("1_hem50")
+theme_override_font_sizes/font_size = 51
+
+[node name="OptionsLabel2" type="Label" parent="Options/CheckboxCanShootWhileMoving"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -239.0
+offset_top = -3.9375
+offset_right = 691.0
+offset_bottom = 82.0625
+grow_vertical = 2
+scale = Vector2(0.25, 0.25)
+pivot_offset = Vector2(0, -10.75)
+theme_override_fonts/font = ExtResource("1_hem50")
+theme_override_font_sizes/font_size = 50
+text = "can shoot while ball is moving"
+
+[node name="CheckboxResetVelocityOnShot" type="CheckBox" parent="Options"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 508.0
+offset_top = 239.0
+offset_right = 532.0
+offset_bottom = 263.0
+scale = Vector2(2, 2)
+theme_override_fonts/font = ExtResource("1_hem50")
+theme_override_font_sizes/font_size = 51
+
+[node name="OptionsLabel2" type="Label" parent="Options/CheckboxResetVelocityOnShot"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -239.0
+offset_top = -3.9375
+offset_right = 598.0
+offset_bottom = 82.0625
+grow_vertical = 2
+scale = Vector2(0.25, 0.25)
+pivot_offset = Vector2(0, -10.75)
+theme_override_fonts/font = ExtResource("1_hem50")
+theme_override_font_sizes/font_size = 50
+text = "reset ball velocity on shot"
+
+[node name="CheckboxReverseMouseDraw" type="CheckBox" parent="Options"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 508.0
+offset_top = 299.0
+offset_right = 532.0
+offset_bottom = 323.0
+scale = Vector2(2, 2)
+theme_override_fonts/font = ExtResource("1_hem50")
+theme_override_font_sizes/font_size = 51
+
+[node name="OptionsLabel2" type="Label" parent="Options/CheckboxReverseMouseDraw"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -239.0
+offset_top = -3.9375
+offset_right = 598.0
+offset_bottom = 82.0625
+grow_vertical = 2
+scale = Vector2(0.25, 0.25)
+pivot_offset = Vector2(0, -10.75)
+theme_override_fonts/font = ExtResource("1_hem50")
+theme_override_font_sizes/font_size = 50
+text = "reverse mouse draw"
+
+[node name="LevelSelection" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 108.0
+offset_top = 153.0
+offset_right = 1138.0
+offset_bottom = 932.0
+
+[node name="ColorRect" type="ColorRect" parent="LevelSelection"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.337255, 0.8, 0.541176, 1)
+
+[node name="ColorRect3" type="ColorRect" parent="LevelSelection"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = -3.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.768627)
+
+[node name="ColorRect2" type="ColorRect" parent="LevelSelection"]
+layout_mode = 1
+offset_left = 31.0
+offset_top = 85.0
+offset_right = 513.0
+offset_bottom = 89.0
+pivot_offset = Vector2(280.265, 0)
+color = Color(1, 1, 1, 0.529412)
+
+[node name="LevelSelectionLabel" type="Label" parent="LevelSelection"]
+texture_filter = 1
+layout_mode = 1
+offset_left = -72.0
+offset_top = 8.0
+offset_right = 632.0
+offset_bottom = 94.0
+scale = Vector2(0.70689, 0.70689)
+pivot_offset = Vector2(352, 43)
+theme_override_fonts/font = ExtResource("1_hem50")
+theme_override_font_sizes/font_size = 70
+text = "LEVEL SELECTION:"
+horizontal_alignment = 1
+
+[node name="ButtonLevel01" type="Button" parent="LevelSelection"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 40.0
+offset_top = 120.0
+offset_right = 208.0
+offset_bottom = 208.0
 scale = Vector2(0.5, 0.5)
 theme_override_fonts/font = ExtResource("1_hem50")
-theme_override_font_sizes/font_size = 65
-text = " LEVEL 01 "
+theme_override_font_sizes/font_size = 64
+text = "01"
 script = ExtResource("2_sj53s")
 level_path = "res://scenes/level_01.tscn"
 
-[node name="ButtonLevel02" type="Button" parent="."]
+[node name="ButtonLevel02" type="Button" parent="LevelSelection"]
 texture_filter = 1
 layout_mode = 0
-offset_left = 400.0
-offset_top = 250.0
-offset_right = 818.0
-offset_bottom = 352.0
+offset_left = 40.0
+offset_top = 180.0
+offset_right = 208.0
+offset_bottom = 268.0
 scale = Vector2(0.5, 0.5)
 theme_override_fonts/font = ExtResource("1_hem50")
-theme_override_font_sizes/font_size = 65
-text = " LEVEL 02 "
+theme_override_font_sizes/font_size = 64
+text = "02"
 script = ExtResource("2_sj53s")
 level_path = "res://scenes/level_02.tscn"
 
-[node name="ButtonLevel03" type="Button" parent="."]
+[node name="ButtonLevel03" type="Button" parent="LevelSelection"]
 texture_filter = 1
 layout_mode = 0
-offset_left = 400.0
-offset_top = 350.0
-offset_right = 818.0
-offset_bottom = 452.0
+offset_left = 40.0
+offset_top = 240.0
+offset_right = 208.0
+offset_bottom = 328.0
 scale = Vector2(0.5, 0.5)
 theme_override_fonts/font = ExtResource("1_hem50")
-theme_override_font_sizes/font_size = 65
-text = " LEVEL 03 "
+theme_override_font_sizes/font_size = 64
+text = "03"
 script = ExtResource("2_sj53s")
 level_path = "res://scenes/level_03.tscn"
 
-[node name="ButtonLevel04" type="Button" parent="."]
+[node name="ButtonLevel04" type="Button" parent="LevelSelection"]
 texture_filter = 1
 layout_mode = 0
-offset_left = 400.0
-offset_top = 450.0
-offset_right = 818.0
-offset_bottom = 552.0
+offset_left = 40.0
+offset_top = 300.0
+offset_right = 208.0
+offset_bottom = 388.0
 scale = Vector2(0.5, 0.5)
 theme_override_fonts/font = ExtResource("1_hem50")
-theme_override_font_sizes/font_size = 65
-text = " LEVEL 04 "
+theme_override_font_sizes/font_size = 64
+text = "04"
 script = ExtResource("2_sj53s")
 level_path = "res://scenes/level_04.tscn"
+
+[connection signal="toggled" from="Options/CheckboxToggleFullscreen" to="Options" method="_on_checkbox_toggle_fullscreen_toggled"]
+[connection signal="toggled" from="Options/CheckboxCanShootWhileMoving" to="Options" method="_on_checkbox_can_shoot_while_moving_toggled"]
+[connection signal="toggled" from="Options/CheckboxResetVelocityOnShot" to="Options" method="_on_checkbox_reset_velocity_on_shot_toggled"]
+[connection signal="toggled" from="Options/CheckboxReverseMouseDraw" to="Options" method="_on_checkbox_reverse_mouse_draw_toggled"]

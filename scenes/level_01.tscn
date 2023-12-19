@@ -4,69 +4,104 @@
 [ext_resource type="PackedScene" uid="uid://cfgjfsautkryy" path="res://scenes/ball.tscn" id="1_pujof"]
 [ext_resource type="PackedScene" uid="uid://ccmncmd3y1knf" path="res://scenes/end_screen.tscn" id="2_qqx5x"]
 [ext_resource type="PackedScene" uid="uid://ctjw8fd2jawwk" path="res://scenes/goal.tscn" id="2_vk722"]
+[ext_resource type="FontFile" uid="uid://b6kdap2sdhueq" path="res://assets/w3-ip.ttf" id="3_1jdrq"]
+[ext_resource type="Script" path="res://level_selection_button.gd" id="4_m4lud"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_f2n4n"]
-friction = 0.5
+friction = 0.0
+bounce = 1.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rvsu3"]
 size = Vector2(275, 275)
 
-[sub_resource type="SegmentShape2D" id="SegmentShape2D_0rsy6"]
-a = Vector2(759.5, 0)
-b = Vector2(-759.5, 0)
-
-[sub_resource type="SegmentShape2D" id="SegmentShape2D_s6t4u"]
-a = Vector2(0, 341.5)
-b = Vector2(0, -341.5)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_xe38j"]
-size = Vector2(1525, 683)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_12qn3"]
+size = Vector2(6, 1600)
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_4in2e")
 
+[node name="BG" type="ColorRect" parent="."]
+z_index = -500
+offset_left = 198.0
+offset_top = 199.0
+offset_right = 1724.0
+offset_bottom = 883.0
+color = Color(0.337255, 0.8, 0.541176, 1)
+
+[node name="BG2" type="ColorRect" parent="."]
+z_index = -500
+offset_left = 204.0
+offset_top = 205.0
+offset_right = 1718.0
+offset_bottom = 877.0
+color = Color(0.0823529, 0.247059, 0.156863, 1)
+
+[node name="Rectangle" type="ColorRect" parent="."]
+offset_left = 823.0
+offset_top = 403.0
+offset_right = 1098.0
+offset_bottom = 678.0
+rotation = 0.785398
+pivot_offset = Vector2(137, 137)
+color = Color(0.337255, 0.8, 0.541176, 1)
+
+[node name="Rectangle2" type="ColorRect" parent="Rectangle"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 272.0
+offset_bottom = 272.0
+pivot_offset = Vector2(137, 137)
+color = Color(0.141176, 0.384314, 0.254902, 1)
+
 [node name="EndScreen" parent="." instance=ExtResource("2_qqx5x")]
 visible = false
+
+[node name="LevelSelectButton" type="Button" parent="."]
+texture_filter = 1
+offset_left = 1465.0
+offset_top = 62.0
+offset_right = 2088.0
+offset_bottom = 150.0
+scale = Vector2(0.4, 0.4)
+pivot_offset = Vector2(250, 0)
+theme_override_fonts/font = ExtResource("3_1jdrq")
+theme_override_font_sizes/font_size = 65
+text = "to level select"
+script = ExtResource("4_m4lud")
+level_path = "res://scenes/level_select_screen.tscn"
 
 [node name="LevelGeo" type="StaticBody2D" parent="."]
 position = Vector2(960, 540)
 physics_material_override = SubResource("PhysicsMaterial_f2n4n")
 
 [node name="rectangle" type="CollisionShape2D" parent="LevelGeo"]
+position = Vector2(0, 0.5)
 rotation = 0.785398
 shape = SubResource("RectangleShape2D_rvsu3")
-debug_color = Color(0.494118, 0.898039, 0.513726, 0.258824)
+debug_color = Color(0.960784, 0.443137, 0.682353, 0.27451)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelGeo"]
-position = Vector2(0, -340)
-shape = SubResource("SegmentShape2D_0rsy6")
-debug_color = Color(0.494118, 0.898039, 0.513726, 0.584314)
+[node name="rectangle2" type="CollisionShape2D" parent="LevelGeo"]
+position = Vector2(-759, 0.5)
+shape = SubResource("RectangleShape2D_12qn3")
+debug_color = Color(0.960784, 0.443137, 0.682353, 0.27451)
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="LevelGeo"]
+[node name="rectangle3" type="CollisionShape2D" parent="LevelGeo"]
+position = Vector2(761, 0.5)
+shape = SubResource("RectangleShape2D_12qn3")
+debug_color = Color(0.960784, 0.443137, 0.682353, 0.27451)
+
+[node name="rectangle4" type="CollisionShape2D" parent="LevelGeo"]
+position = Vector2(0, -338)
+rotation = 1.57079
+shape = SubResource("RectangleShape2D_12qn3")
+debug_color = Color(0.960784, 0.443137, 0.682353, 0.27451)
+
+[node name="rectangle5" type="CollisionShape2D" parent="LevelGeo"]
 position = Vector2(0, 340)
-shape = SubResource("SegmentShape2D_0rsy6")
-debug_color = Color(0.494118, 0.898039, 0.513726, 0.584314)
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="LevelGeo"]
-position = Vector2(-761, 0)
-shape = SubResource("SegmentShape2D_s6t4u")
-debug_color = Color(0.494118, 0.898039, 0.513726, 0.584314)
-
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="LevelGeo"]
-position = Vector2(761, 0)
-shape = SubResource("SegmentShape2D_s6t4u")
-debug_color = Color(0.494118, 0.898039, 0.513726, 0.584314)
-
-[node name="BG" type="StaticBody2D" parent="."]
-z_index = -500
-position = Vector2(960, 540)
-collision_layer = 0
-collision_mask = 0
-physics_material_override = SubResource("PhysicsMaterial_f2n4n")
-
-[node name="CollisionShape2D6" type="CollisionShape2D" parent="BG"]
-shape = SubResource("RectangleShape2D_xe38j")
-debug_color = Color(0.152941, 0.407843, 0.266667, 0.14902)
+rotation = 1.57079
+shape = SubResource("RectangleShape2D_12qn3")
+debug_color = Color(0.960784, 0.443137, 0.682353, 0.27451)
 
 [node name="Ball" parent="." instance=ExtResource("1_pujof")]
 position = Vector2(400, 540)
