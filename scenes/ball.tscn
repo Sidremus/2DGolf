@@ -27,7 +27,7 @@ point_count = 4
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
 [node name="Ball" type="RigidBody2D"]
-z_index = 200
+z_index = 1000
 position = Vector2(366, 233)
 input_pickable = true
 physics_material_override = SubResource("PhysicsMaterial_fo4ki")
@@ -47,7 +47,7 @@ debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
 [node name="Crosshair" type="Sprite2D" parent="."]
 texture_filter = 1
-position = Vector2(181, 117)
+position = Vector2(-0.5, 0.5)
 texture = ExtResource("6_jl30q")
 
 [node name="MouseLine" type="Line2D" parent="."]
@@ -126,13 +126,11 @@ offset_bottom = 23.0
 theme_override_fonts/font = ExtResource("8_obkd5")
 
 [node name="CurrentShotInfo" type="Label" parent="."]
+texture_filter = 1
 offset_right = 81.0
 offset_bottom = 66.0
 theme_override_fonts/font = ExtResource("8_obkd5")
-text = "TESF SDF 
-sDFS 
-sdf dh
-"
+text = " "
 horizontal_alignment = 1
 vertical_alignment = 1
 

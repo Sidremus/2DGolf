@@ -6,10 +6,10 @@
 radius = 7.5
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vs4ds"]
-radius = 15.0
+radius = 12.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fy7cr"]
-radius = 15.0
+radius = 12.0
 
 [node name="Goal" type="Area2D"]
 position = Vector2(1520, 540)

@@ -1,0 +1,128 @@
+[gd_scene load_steps=12 format=3 uid="uid://beupuw46kmapf"]
+
+[ext_resource type="Script" path="res://level.gd" id="1_y72x0"]
+[ext_resource type="PackedScene" uid="uid://ccmncmd3y1knf" path="res://scenes/end_screen.tscn" id="2_dp1e2"]
+[ext_resource type="PackedScene" uid="uid://cfgjfsautkryy" path="res://scenes/ball.tscn" id="3_ojmkq"]
+[ext_resource type="PackedScene" uid="uid://ctjw8fd2jawwk" path="res://scenes/goal.tscn" id="4_her8a"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_f2n4n"]
+friction = 0.5
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1nfj1"]
+size = Vector2(394.826, 677)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_0rsy6"]
+a = Vector2(759.5, 0)
+b = Vector2(-759.5, 0)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_s6t4u"]
+a = Vector2(0, 341.5)
+b = Vector2(0, -341.5)
+
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_3j554"]
+points = PackedVector2Array(-400, 0, 0, -175.655, 134.425, 0)
+
+[sub_resource type="SeparationRayShape2D" id="SeparationRayShape2D_ymwcf"]
+length = 40.14
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xe38j"]
+size = Vector2(1525, 683)
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_y72x0")
+
+[node name="EndScreen" parent="." instance=ExtResource("2_dp1e2")]
+visible = false
+
+[node name="LevelGeo" type="StaticBody2D" parent="."]
+position = Vector2(960, 540)
+physics_material_override = SubResource("PhysicsMaterial_f2n4n")
+
+[node name="Area2D" type="Area2D" parent="LevelGeo"]
+position = Vector2(194.5, 0)
+priority = -10
+gravity_space_override = 1
+gravity = 250.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelGeo/Area2D"]
+modulate = Color(0.215686, 0.215686, 0.215686, 0.862745)
+position = Vector2(-392, 0)
+shape = SubResource("RectangleShape2D_1nfj1")
+debug_color = Color(0.658824, 0.207843, 0.184314, 1)
+
+[node name="Area2D2" type="Area2D" parent="LevelGeo"]
+position = Vector2(727.5, 0)
+priority = -10
+gravity_space_override = 1
+gravity_point_center = Vector2(0, -1)
+gravity_direction = Vector2(0, -1)
+gravity = 250.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelGeo/Area2D2"]
+modulate = Color(0.215686, 0.215686, 0.215686, 0.862745)
+position = Vector2(-530, 0)
+rotation = 3.14159
+shape = SubResource("RectangleShape2D_1nfj1")
+debug_color = Color(0.490196, 0.333333, 0.388235, 1)
+
+[node name="Line" type="CollisionShape2D" parent="LevelGeo"]
+position = Vector2(0, -340)
+shape = SubResource("SegmentShape2D_0rsy6")
+debug_color = Color(0.494118, 0.898039, 0.513726, 0.584314)
+
+[node name="Line2" type="CollisionShape2D" parent="LevelGeo"]
+position = Vector2(0, 340)
+shape = SubResource("SegmentShape2D_0rsy6")
+debug_color = Color(0.494118, 0.898039, 0.513726, 0.584314)
+
+[node name="Line3" type="CollisionShape2D" parent="LevelGeo"]
+position = Vector2(-761, 0)
+shape = SubResource("SegmentShape2D_s6t4u")
+debug_color = Color(0.494118, 0.898039, 0.513726, 0.584314)
+
+[node name="Line4" type="CollisionShape2D" parent="LevelGeo"]
+position = Vector2(761, 0)
+shape = SubResource("SegmentShape2D_s6t4u")
+debug_color = Color(0.494118, 0.898039, 0.513726, 0.584314)
+
+[node name="Wedge" type="CollisionShape2D" parent="LevelGeo"]
+position = Vector2(-1, -338)
+rotation = 3.14159
+shape = SubResource("ConvexPolygonShape2D_3j554")
+debug_color = Color(0.494118, 0.898039, 0.513726, 0.258824)
+
+[node name="Wedge2" type="CollisionShape2D" parent="LevelGeo"]
+position = Vector2(0, 340)
+rotation = 6.28319
+shape = SubResource("ConvexPolygonShape2D_3j554")
+debug_color = Color(0.494118, 0.898039, 0.513726, 0.258824)
+
+[node name="BG" type="StaticBody2D" parent="."]
+z_index = -500
+position = Vector2(960, 540)
+collision_layer = 0
+collision_mask = 0
+physics_material_override = SubResource("PhysicsMaterial_f2n4n")
+
+[node name="Line6" type="CollisionShape2D" parent="BG"]
+position = Vector2(-197, -205)
+scale = Vector2(10, 10)
+shape = SubResource("SeparationRayShape2D_ymwcf")
+debug_color = Color(0.988235, 0.619608, 0.541176, 0.964706)
+
+[node name="Line7" type="CollisionShape2D" parent="BG"]
+position = Vector2(195, 173)
+rotation = 3.14159
+scale = Vector2(10, 10)
+shape = SubResource("SeparationRayShape2D_ymwcf")
+debug_color = Color(0.988235, 0.619608, 0.541176, 0.964706)
+
+[node name="CollisionShape2D6" type="CollisionShape2D" parent="BG"]
+shape = SubResource("RectangleShape2D_xe38j")
+debug_color = Color(0.152941, 0.407843, 0.266667, 0.14902)
+
+[node name="Ball" parent="." instance=ExtResource("3_ojmkq")]
+position = Vector2(400, 540)
+linear_damp_mode = 0
+
+[node name="Goal" parent="." instance=ExtResource("4_her8a")]

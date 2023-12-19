@@ -1,14 +1,14 @@
 extends RigidBody2D
 class_name Ball
 
+@onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @onready var mouse_line: Line2D = $MouseLine
 @onready var aim_line: Line2D = $AimLine
 @onready var power_line: Line2D = $PowerLine
 @onready var crosshair: Sprite2D = $Crosshair
 @onready var last_shot_info_label: Label = $LastShotInfo
 @onready var current_shot_info_label: Label = $CurrentShotInfo
-
-@onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
+@onready var end_screen_label: Label = $"../EndScreen/EndScreenLabel"
 
 var is_shooting: bool = false
 var can_shoot: bool = true
@@ -24,6 +24,7 @@ var score_tween: Tween
 @onready var ball_hit_02_AS: AudioStreamPlayer2D = $BallHit02AS
 @onready var hole_in_one_AS: AudioStreamPlayer2D = $HoleInOneAS
 @onready var ball_impact_AS: AudioStreamPlayer2D = $BallImpactAS
+@onready var ball_impact_volume_ref: float = 1.
 
 func _input(event: InputEvent) -> void:
 	if freeze: return
@@ -46,7 +47,7 @@ func _process(delta: float) -> void:
 		mouse_line.global_position = Game.mouse_pos_at_click
 		mouse_line.points[1] = mouse_line.to_local(get_global_mouse_position()).limit_length(Game.max_mouse_line_length)
 		var directional_fac: float = -1. if !Game.reverse_mouse_draw else 1.
-		var aim_line_vec: Vector2 = aim_line.points[1].move_toward((directional_fac * mouse_line.to_local(get_global_mouse_position())).limit_length(Game.max_mouse_line_length * .75), Game.joke_number * delta)
+		var aim_line_vec: Vector2 = (directional_fac * mouse_line.to_local(get_global_mouse_position())).limit_length(Game.max_mouse_line_length * .75)
 		aim_line.points[1] = aim_line_vec 
 		aim_line.position = aim_line_vec.normalized() * Game.max_mouse_line_length * .1
 		power_line.points[1].y = -(mouse_line.points[1].length() / Game.max_mouse_line_length) * (Game.max_mouse_line_length / 2.)
@@ -58,9 +59,10 @@ func _process(delta: float) -> void:
 
 func update_UI(delta: float):
 	var t: String = "Shots: " + str(Game.shot_count)
-	t = t + "\n\nLast: " 
-	t = t + "\n  Power: " + str(last_shot_power).pad_decimals(1) + "%"
-	t = t + "\n  Angle: " + str(last_shot_angle + PI).pad_decimals(1) + "°"
+	if Game.shot_count > 0:
+		t = t + "\n\nLast: " 
+		t = t + "\n  Power: " + str(last_shot_power).pad_decimals(1) + "%"
+		t = t + "\n  Angle: " + str(snappedf(rad_to_deg(last_shot_angle + PI), .1)).pad_decimals(1) + "°"
 	last_shot_info_label.text = t
 	if is_shooting && (is_selected || !Game.multi_ball_mode):
 		var power_lerp: float = (mouse_line.points[1].length() / Game.max_mouse_line_length)
@@ -69,7 +71,7 @@ func update_UI(delta: float):
 		
 		var angle: float = Vector2.UP.angle_to(shot_vec)
 		var new_pos: Vector2 = mouse_line.to_global(mouse_line.points[1]) - current_shot_info_label.size / 2. + mouse_line.points[1].normalized() * Game.max_mouse_line_length * .3
-		current_shot_info_label.position = current_shot_info_label.position.move_toward(new_pos, delta * maxf(Game.joke_number, current_shot_info_label.position.distance_to(new_pos)) * 2.)
+		current_shot_info_label.position = current_shot_info_label.position.move_toward(new_pos, delta * maxf(Game.funny_number, current_shot_info_label.position.distance_to(new_pos)) * 2.)
 		
 		t = "Power: " + str(snappedf(power_lerp * 100., 1.)).pad_decimals(1) + "%"
 		t = t + "\nAngle: " + str(snappedf(rad_to_deg(angle + PI), .1)).pad_decimals(1) + "°"
@@ -84,7 +86,10 @@ func begin_shot():
 
 func finish_shot():
 	is_shooting = false
+	if get_global_mouse_position() == Game.mouse_pos_at_click: return
+	
 	var power_lerp: float = (mouse_line.points[1].length() / Game.max_mouse_line_length)
+	
 	if randf() > .66:
 		ball_hit_01_AS.pitch_scale = lerpf(.5, 1.5, power_lerp) + randf_range(-.1, .1)
 		ball_hit_01_AS.play()
@@ -101,7 +106,7 @@ func finish_shot():
 	Game.shot_count += 1
 	
 	last_shot_power = snappedf(power_lerp * 100., 1.)
-	last_shot_angle = snappedf(rad_to_deg(Vector2.UP.angle_to(shot_vec)), .1)
+	last_shot_angle = Vector2.UP.angle_to(shot_vec)
 
 func _integrate_forces(_state: PhysicsDirectBodyState2D) -> void:
 	if freeze: return
@@ -131,10 +136,18 @@ func _ready() -> void:
 	last_shot_info_label.top_level = true
 	last_shot_info_label.global_position = Vector2(60., 50.)
 	current_shot_info_label.top_level = true
+	
+	ball_impact_volume_ref = ball_impact_AS.volume_db
+	var offset_vec: Vector2 = Vector2(randf_range(-Game.start_offset_range, Game.start_offset_range),randf_range(-Game.start_offset_range, Game.start_offset_range)).limit_length(Game.start_offset_range)
+	global_position += offset_vec.rotated(randf_range(-TAU, TAU))
 
 func score(target_pos: Vector2):
 	freeze = true
 	is_shooting = false
+	crosshair.hide()
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	if Game.shot_count == 1: hole_in_one_AS.play()
+	
 	ball_in_hole_AS.pitch_scale = randf_range(.75, 1.25)
 	ball_in_hole_AS.play()
 	score_tween = get_tree().create_tween()
@@ -144,13 +157,11 @@ func score(target_pos: Vector2):
 	score_tween.tween_property(self, "global_position", target_pos, .8)
 	score_tween.tween_property(self, "scale", scale * 0., .8)
 	score_tween.set_parallel(false)
-	if Game.shot_count == 1:
-		hole_in_one_AS.play()
-		score_tween.tween_callback(Game.go_to_level_select).set_delay(hole_in_one_AS.stream.get_length())
-	else:
-		score_tween.tween_callback(Game.go_to_level_select).set_delay(2.)
+	var end_screen: Control = get_tree().get_first_node_in_group("Endscreen")
+	score_tween.tween_callback(end_screen.show).set_delay(2.)
+	end_screen_label.text = "FINISH!\n\nShots: " + str(Game.shot_count) + "\n  Par: " + str(Game.current_par)
 
-func _on_body_entered(body: Node) -> void:
-	ball_impact_AS.pitch_scale = lerpf(.85, 1.15, linear_velocity.length() / Game.shot_power) + randf_range(-.05, .05)
-	ball_impact_AS.volume_db = lerpf(-12., -3., linear_velocity.length() / Game.shot_power)
+func _on_body_entered(_body: Node) -> void:
+	ball_impact_AS.pitch_scale = lerpf(1.2, .8, linear_velocity.length() / Game.shot_power) + randf_range(-.025, .025)
+	ball_impact_AS.volume_db = lerpf(ball_impact_volume_ref - 5., ball_impact_volume_ref + 5, linear_velocity.length() / Game.shot_power)
 	ball_impact_AS.play()

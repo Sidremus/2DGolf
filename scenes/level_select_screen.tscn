@@ -1,0 +1,68 @@
+[gd_scene load_steps=3 format=3 uid="uid://bxonjf52a01u3"]
+
+[ext_resource type="FontFile" uid="uid://b6kdap2sdhueq" path="res://assets/w3-ip.ttf" id="1_hem50"]
+[ext_resource type="Script" path="res://level_selection_button.gd" id="2_sj53s"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ButtonLevel01" type="Button" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_left = 400.0
+offset_top = 150.0
+offset_right = 818.0
+offset_bottom = 252.0
+scale = Vector2(0.5, 0.5)
+theme_override_fonts/font = ExtResource("1_hem50")
+theme_override_font_sizes/font_size = 65
+text = " LEVEL 01 "
+script = ExtResource("2_sj53s")
+level_path = "res://scenes/level_01.tscn"
+
+[node name="ButtonLevel02" type="Button" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_left = 400.0
+offset_top = 250.0
+offset_right = 818.0
+offset_bottom = 352.0
+scale = Vector2(0.5, 0.5)
+theme_override_fonts/font = ExtResource("1_hem50")
+theme_override_font_sizes/font_size = 65
+text = " LEVEL 02 "
+script = ExtResource("2_sj53s")
+level_path = "res://scenes/level_02.tscn"
+
+[node name="ButtonLevel03" type="Button" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_left = 400.0
+offset_top = 350.0
+offset_right = 818.0
+offset_bottom = 452.0
+scale = Vector2(0.5, 0.5)
+theme_override_fonts/font = ExtResource("1_hem50")
+theme_override_font_sizes/font_size = 65
+text = " LEVEL 03 "
+script = ExtResource("2_sj53s")
+level_path = "res://scenes/level_03.tscn"
+
+[node name="ButtonLevel04" type="Button" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_left = 400.0
+offset_top = 450.0
+offset_right = 818.0
+offset_bottom = 552.0
+scale = Vector2(0.5, 0.5)
+theme_override_fonts/font = ExtResource("1_hem50")
+theme_override_font_sizes/font_size = 65
+text = " LEVEL 04 "
+script = ExtResource("2_sj53s")
+level_path = "res://scenes/level_04.tscn"
