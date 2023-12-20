@@ -12,4 +12,4 @@ https://sidremus.itch.io/2d-golf
 
 
 
-![Cover](https://github.com/Sidremus/2DGolf/assets/62385452/41bf2a18-741d-4de9-bf9f-069a79a959cf)
+![Golf](https://github.com/Sidremus/2DGolf/assets/62385452/d9b26815-644d-429f-a4b0-97a5554caab9)
