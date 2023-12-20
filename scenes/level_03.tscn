@@ -138,14 +138,12 @@ debug_color = Color(0.592157, 0.164706, 0.235294, 0.882353)
 [node name="Line5" type="CollisionShape2D" parent="LevelGeo"]
 position = Vector2(357.427, -74.3149)
 rotation = 1.83259
-scale = Vector2(1, 1)
 shape = SubResource("SegmentShape2D_h66cx")
 debug_color = Color(0.494118, 0.898039, 0.513726, 0.913725)
 
 [node name="Line6" type="CollisionShape2D" parent="LevelGeo"]
 position = Vector2(358.203, 77.2127)
 rotation = 1.30899
-scale = Vector2(1, 1)
 shape = SubResource("SegmentShape2D_h66cx")
 debug_color = Color(0.494118, 0.898039, 0.513726, 0.913725)
 
